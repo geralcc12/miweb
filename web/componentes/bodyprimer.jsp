@@ -50,9 +50,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Acciones :</h6>
-                        <a class="collapse-item" href="registro.jsp"> Registro Usuarios</a>
-                        <a class="collapse-item" href="buttons.html">Construcciones</a>
-                        <a class="collapse-item" href="buttons.html">Propiedades</a>
+                        <a class="collapse-item" href=" ">Construcciones</a>
+                        <a class="collapse-item" href=" ">Propiedades</a>
                         
                     </div>
                 </div>
@@ -84,7 +83,7 @@
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Acciones:</h6>
-                        <a class="collapse-item" href="verUsuarios.jsp">Ver usuarios </a>
+                        <a class="collapse-item" href="SvUsuarios">Ver usuarios </a>
                         <a class="collapse-item" href="altaUsuarios.jsp"> Registro </a>
                     </div>
                 </div>

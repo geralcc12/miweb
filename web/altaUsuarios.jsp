@@ -11,6 +11,10 @@
             <input type="text" class="form-control form-control-user" id="nombreusu"name="nombreusu"
                    placeholder="nombreUsuario">
         </div>
+                <div class="col-sm-6 mb-3">
+            <input type="text" class="form-control form-control-user" id="nombre"name="nombre"
+                   placeholder="Nombre">
+        </div>
         <div class="col-sm-6 mb-3">
             <input type="text" class="form-control form-control-user" id="contrasena"name="contrasena"
                    placeholder="Contraseña">
@@ -18,14 +22,6 @@
         <div class="col-sm-6 mb-3">
             <input type="text" class="form-control form-control-user" id=" rol"name="rol"
                    placeholder=" Rol ">
-        </div>
-        <div class="col-sm-6 mb-3">
-            <input type="text" class="form-control form-control-user" id=" direccion"name="direccion"
-                   placeholder="Direccion">
-        </div>
-        <div class="col-sm-6 mb-3">
-            <input type="text" class="form-control form-control-user" id=" fechanac"name="fechanac"
-                   placeholder="FechaNac">
         </div>
         <!-- aca ira todo lo de horario y usuario -->
     </div>

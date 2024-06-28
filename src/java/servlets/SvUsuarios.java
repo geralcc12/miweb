@@ -29,27 +29,30 @@ public class SvUsuarios extends HttpServlet {
         List<Usuario>listaUsuarios=new ArrayList<Usuario>();
         UsuarioJpaController u1=new UsuarioJpaController();
         listaUsuarios=u1.findUsuarioEntities();
-        HttpSession session = request.getSession();
-        session.setAttribute("listaUsuarios", listaUsuarios);
-        
+        HttpSession misession = request.getSession();
+        misession.setAttribute("listaUsuarios", listaUsuarios);
+        response.sendRedirect("verUsuarios.jsp");
     }
 
    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String nombreUsuario=request.getParameter("nombreusu");
+        String nombre=request.getParameter("nombre");
+        int rol=  Integer.parseInt(request.getParameter("rol"));
+        String contrasena=request.getParameter("contrasena");
         
-        String nombreUsuario =request.getParameter("nombreusu");
-        String contra=request.getParameter("contrasena");
-        String rol = request.getParameter("rol");
-        Usuario usu = new Usuario( Integer.SIZE,nombreUsuario,"geral" , contra);
-        UsuarioJpaController usujpa=new UsuarioJpaController();
-        usujpa.create(usu);
- 
+        Usuario usuarioNuevo = new Usuario(Integer.SIZE, nombre, nombreUsuario, contrasena);
+        usuarioNuevo.setIdTipo(new TipoUsuario(rol));
+        
+        UsuarioJpaController usuControl = new UsuarioJpaController();
+        
+        usuControl.create(usuarioNuevo);
+        
+        
         response.sendRedirect("index.jsp");
-        
     }
-    
 
     @Override
     public String getServletInfo() {
