@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author User
+ * @author USER
  */
 @Entity
 @Table(name = "tipo_usuario")

@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author User
+ * @author USER
  */
 @Entity
 @Table(name = "construccion")

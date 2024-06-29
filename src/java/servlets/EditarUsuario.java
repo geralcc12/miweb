@@ -4,66 +4,79 @@
  */
 package servlets;
 
+import controller.UsuarioJpaController;
+import controller.exceptions.NonexistentEntityException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.TipoUsuario;
+import model.Usuario;
 
-/**
- *
- * @author User
- */
 @WebServlet(name = "EditarUsuario", urlPatterns = {"/EditarUsuario"})
 public class EditarUsuario extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EditarUsuario</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EditarUsuario at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        // metodo que obtengo un id usuario y redirige a la pagina editar usuario
+        
+        String idRecibido = request.getParameter("id");
+
+        UsuarioJpaController usuControl = new UsuarioJpaController();
+
+        Usuario Usuario = usuControl.findUsuario(Integer.valueOf(idRecibido));
+
+        request.setAttribute("usuario", Usuario);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("EditarUsuario.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        // metodo
+        
+        String id = request.getParameter("id");
+        String nombre = request.getParameter("nombre");
+        String usuario = request.getParameter("usuario");
+        String contrasena = request.getParameter("contrasena");
+        String rol = request.getParameter("rol");
+
+        UsuarioJpaController usuControl1 = new UsuarioJpaController();
+        Usuario usua = usuControl1.findUsuario(Integer.valueOf(id));
+        
+        usua.setNombre(nombre);
+        usua.setPassword(contrasena);
+        usua.setUsuario(usuario);
+        usua.setIdTipo(new TipoUsuario(Integer.valueOf(rol)));
+        try {
+            usuControl1.edit(usua);
+            // Redirigir internamente al servlet usando RequestDispatcher
+            response.sendRedirect(request.getContextPath() + "/SvUsuarios");
+
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(EditarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(EditarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     @Override

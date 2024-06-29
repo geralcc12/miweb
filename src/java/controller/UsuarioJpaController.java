@@ -1,6 +1,9 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package controller;
 
-import controller.exceptions.IllegalOrphanException;
 import controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -18,7 +21,7 @@ import model.Usuario;
 
 /**
  *
- * @author User
+ * @author USER
  */
 public class UsuarioJpaController implements Serializable {
 
@@ -72,7 +75,7 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public void edit(Usuario usuario) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Usuario usuario) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -82,18 +85,6 @@ public class UsuarioJpaController implements Serializable {
             TipoUsuario idTipoNew = usuario.getIdTipo();
             List<Propiedad> propiedadListOld = persistentUsuario.getPropiedadList();
             List<Propiedad> propiedadListNew = usuario.getPropiedadList();
-            List<String> illegalOrphanMessages = null;
-            for (Propiedad propiedadListOldPropiedad : propiedadListOld) {
-                if (!propiedadListNew.contains(propiedadListOldPropiedad)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Propiedad " + propiedadListOldPropiedad + " since its propietarioId field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             if (idTipoNew != null) {
                 idTipoNew = em.getReference(idTipoNew.getClass(), idTipoNew.getIdTipo());
                 usuario.setIdTipo(idTipoNew);
@@ -113,6 +104,12 @@ public class UsuarioJpaController implements Serializable {
             if (idTipoNew != null && !idTipoNew.equals(idTipoOld)) {
                 idTipoNew.getUsuarioList().add(usuario);
                 idTipoNew = em.merge(idTipoNew);
+            }
+            for (Propiedad propiedadListOldPropiedad : propiedadListOld) {
+                if (!propiedadListNew.contains(propiedadListOldPropiedad)) {
+                    propiedadListOldPropiedad.setPropietarioId(null);
+                    propiedadListOldPropiedad = em.merge(propiedadListOldPropiedad);
+                }
             }
             for (Propiedad propiedadListNewPropiedad : propiedadListNew) {
                 if (!propiedadListOld.contains(propiedadListNewPropiedad)) {
@@ -142,7 +139,7 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -154,21 +151,15 @@ public class UsuarioJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<Propiedad> propiedadListOrphanCheck = usuario.getPropiedadList();
-            for (Propiedad propiedadListOrphanCheckPropiedad : propiedadListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the Propiedad " + propiedadListOrphanCheckPropiedad + " in its propiedadList field has a non-nullable propietarioId field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             TipoUsuario idTipo = usuario.getIdTipo();
             if (idTipo != null) {
                 idTipo.getUsuarioList().remove(usuario);
                 idTipo = em.merge(idTipo);
+            }
+            List<Propiedad> propiedadList = usuario.getPropiedadList();
+            for (Propiedad propiedadListPropiedad : propiedadList) {
+                propiedadListPropiedad.setPropietarioId(null);
+                propiedadListPropiedad = em.merge(propiedadListPropiedad);
             }
             em.remove(usuario);
             em.getTransaction().commit();

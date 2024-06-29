@@ -23,12 +23,12 @@ import model.Propiedad;
 
 /**
  *
- * @author User
+ * @author USER
  */
 public class PropiedadJpaController implements Serializable {
 
     public PropiedadJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("SistemaCatastroPU");
+        this.emf = Persistence.createEntityManagerFactory("Sistema_CatastralPU");
     }
     private EntityManagerFactory emf = null;
 

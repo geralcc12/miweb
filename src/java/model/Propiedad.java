@@ -23,7 +23,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author User
+ * @author USER
  */
 @Entity
 @Table(name = "propiedad")
@@ -68,7 +68,7 @@ public class Propiedad implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPropiedad")
     private List<Impuesto> impuestoList;
     @JoinColumn(name = "propietario_id", referencedColumnName = "id_user")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Usuario propietarioId;
 
     public Propiedad() {

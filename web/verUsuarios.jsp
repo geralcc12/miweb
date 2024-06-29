@@ -23,7 +23,7 @@
                             <th>Id</th>
                             <th>Nombre</th>
                             <th>Usuario</th>
-                            <th>Rol</th>
+                            <th>Contrasena</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -36,8 +36,8 @@
                                 <td>${Usuario.usuario}</td>
                                 <td>${Usuario.password}</td>
                                 <td>
-                                    <a href="modificarUsuario.jsp?id=${Usuario.idUser}" class="btn btn-primary btn-sm">Modificar</a>
-                                    <a href="eliminarUsuario.jsp?id=${Usuario.idUser}" class="btn btn-danger btn-sm">Eliminar</a>
+                                    <a href="EditarUsuario?id=${Usuario.idUser}" class="btn btn-primary btn-sm">Modificar</a>
+                                    <a href="EliminarUsuario?id=${Usuario.idUser}" class="btn btn-danger btn-sm">Eliminar</a>
                                 </td>
                             </tr>
                         </c:forEach>

@@ -7,7 +7,6 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +22,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author User
+ * @author USER
  */
 @Entity
 @Table(name = "usuario")
@@ -53,7 +52,7 @@ public class Usuario implements Serializable {
     @Lob
     @Column(name = "comentario")
     private String comentario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "propietarioId")
+    @OneToMany(mappedBy = "propietarioId")
     private List<Propiedad> propiedadList;
     @JoinColumn(name = "id_tipo", referencedColumnName = "id_tipo")
     @ManyToOne(optional = false)

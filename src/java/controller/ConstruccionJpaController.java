@@ -20,12 +20,12 @@ import model.TipoConstruccion;
 
 /**
  *
- * @author User
+ * @author USER
  */
 public class ConstruccionJpaController implements Serializable {
 
     public ConstruccionJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("SistemaCatastroPU");
+        this.emf = Persistence.createEntityManagerFactory("Sistema_CatastralPU");
     }
     private EntityManagerFactory emf = null;
 

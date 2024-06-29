@@ -19,12 +19,12 @@ import model.Propiedad;
 
 /**
  *
- * @author User
+ * @author USER
  */
 public class ImpuestoJpaController implements Serializable {
 
     public ImpuestoJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("SistemaCatastroPU");
+        this.emf = Persistence.createEntityManagerFactory("Sistema_CatastralPU");
     }
     private EntityManagerFactory emf = null;
 
