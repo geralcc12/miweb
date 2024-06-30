@@ -4,6 +4,7 @@
  */
 package servlets;
 
+import controller.UsuarioJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Usuario;
 
 /**
  *
@@ -38,15 +40,20 @@ public class loginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
       
-        String nombre = request.getParameter("Correo");
+        String nombreUsuario = request.getParameter("Correo");
+        String contrasena = request.getParameter("password");
         
-        HttpSession misession = request.getSession();
-        misession.setAttribute("nombre", nombre);
+        UsuarioJpaController usuControl = new UsuarioJpaController();
         
-        
-        response.sendRedirect("index.jsp");
+        for (Usuario Usuario : usuControl.findUsuarioEntities()) {
+            
+            if (Usuario.getUsuario().equals(nombreUsuario) && Usuario.getPassword().equals(contrasena)) {
+                response.sendRedirect("index.jsp");
+            }
             
             
+        }
+        
     }
 
     @Override
