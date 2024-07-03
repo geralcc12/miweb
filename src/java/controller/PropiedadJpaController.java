@@ -21,10 +21,6 @@ import javax.persistence.Persistence;
 import model.Impuesto;
 import model.Propiedad;
 
-/**
- *
- * @author USER
- */
 public class PropiedadJpaController implements Serializable {
 
     public PropiedadJpaController() {

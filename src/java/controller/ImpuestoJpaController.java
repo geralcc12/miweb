@@ -17,10 +17,6 @@ import javax.persistence.criteria.Root;
 import model.Impuesto;
 import model.Propiedad;
 
-/**
- *
- * @author USER
- */
 public class ImpuestoJpaController implements Serializable {
 
     public ImpuestoJpaController() {
