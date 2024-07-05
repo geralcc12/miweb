@@ -215,5 +215,19 @@ public class UsuarioJpaController implements Serializable {
             em.close();
         }
     }
+    public boolean comprobarIngreso(String nombreUsuario, String contrasena) {
+    List<Usuario> listaUsuarios = findUsuarioEntities();
+    boolean ingreso = false;
+
+    for (Usuario usu : listaUsuarios) {
+        if (usu.getNombreUsuario().equals(nombreUsuario) && usu.getContrasena().equals(contrasena)) {
+            ingreso = true;
+            break;
+        }
+    }
+
+    return ingreso;
+}
+
     
 }

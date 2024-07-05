@@ -152,5 +152,13 @@ public class Usuario implements Serializable {
     public String toString() {
         return "model.Usuario[ idUser=" + idUser + " ]";
     }
+
+    public Object getNombreUsuario() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getContrasena() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

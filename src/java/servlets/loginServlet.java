@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package servlets;
 
 import controller.UsuarioJpaController;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,16 +19,13 @@ public class loginServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        // Puedes dejar esto vacío o agregar lógica común para GET y POST si lo deseas
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        
-
+        // Implementa si necesitas manejar solicitudes GET
     }
 
     @Override
@@ -45,20 +37,25 @@ public class loginServlet extends HttpServlet {
         
         UsuarioJpaController usuControl = new UsuarioJpaController();
         
-        for (Usuario Usuario : usuControl.findUsuarioEntities()) {
-            
-            if (Usuario.getUsuario().equals(nombreUsuario) && Usuario.getPassword().equals(contrasena)) {
+        boolean validacion = false;
+        
+        for (Usuario usuario : usuControl.findUsuarioEntities()) {
+            if (usuario.getUsuario().equals(nombreUsuario) && usuario.getPassword().equals(contrasena)) {
+                validacion = true;
+                HttpSession sesion = request.getSession(true);
+                sesion.setAttribute("usuario", nombreUsuario);
                 response.sendRedirect("index.jsp");
+                break;
             }
-            
-            
         }
         
+        if (!validacion) {
+            response.sendRedirect("loginerror.jsp");
+        }
     }
 
     @Override
     public String getServletInfo() {
         return "Short description";
     }
-
 }
